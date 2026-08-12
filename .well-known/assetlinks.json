@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.sebita1809.twa",
+        "sha256_cert_fingerprints": ["E5:0C:EE:52:35:A7:17:01:3F:20:D3:8C:37:24:6D:6C:D7:A9:2F:E7:29:7B:C4:31:2D:52:68:C8:22:8F:12:23"]
+      }
+    }]
