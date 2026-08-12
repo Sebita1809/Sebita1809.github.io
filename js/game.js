@@ -78,7 +78,15 @@ document.addEventListener('visibilitychange', () => {
 // gesto del usuario (los navegadores bloquean el audio hasta entonces) con
 // el volumen guardado si había una partida previa, o 0.7 por defecto —
 // mismo default que usa SettingsScene si nunca se tocó el slider.
-document.addEventListener('pointerdown', () => {
+//
+// 3 tipos de evento en vez de solo pointerdown (reportado por el usuario:
+// no sonaba abriéndolo desde el link) — Music.start() ya se guarda a sí
+// mismo (this._started), así que no hay riesgo de arrancar 2 veces aunque
+// disparen varios de estos.
+function _unlockMusic() {
   const vol = game.registry.get('volume');
   Music.start(typeof vol === 'number' ? vol : 0.7);
-}, { once: true });
+}
+document.addEventListener('pointerdown', _unlockMusic, { once: true });
+document.addEventListener('touchstart', _unlockMusic, { once: true, passive: true });
+document.addEventListener('keydown', _unlockMusic, { once: true });

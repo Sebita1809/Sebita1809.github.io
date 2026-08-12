@@ -169,8 +169,10 @@ class KitchenScene extends Phaser.Scene {
   // RoomScene._veroIdleTexture, copiada acá porque KitchenScene no extiende
   // RoomScene (mismo criterio que el resto de sus helpers propios). Ya no
   // hay peinado elegible — cada prenda usa siempre su versión "suelto".
+  // 'default' vuelve a vero_idle directo (ver RoomScene._veroIdleTexture).
   _veroIdleTexture() {
     const outfit = this.registry.get('outfit') || 'default';
+    if (outfit === 'default') return 'vero_idle';
     const key = `vero_${outfit}_suelto`;
     return this.textures.exists(key) ? key : 'vero_idle';
   }

@@ -461,8 +461,10 @@ class BedroomScene extends RoomScene {
   // fila solo la resalta, "✓ Confirmar" recién ahí aplica y guarda — antes
   // se aplicaba al toque, sin forma de repasar antes de confirmar). Ya no
   // hay peinado elegible — cada prenda usa siempre su versión "suelto".
+  // 'default' usa vero_idle directo (ver RoomScene._veroIdleTexture).
   _openArmario() {
     const items = OUTFITS.map(outfit => {
+      if (outfit.id === 'default') return { id: 'default', label: outfit.nombre, textureKey: 'vero_idle' };
       const combo = `vero_${outfit.id}_suelto`;
       const textureKey = this.textures.exists(combo) ? combo : 'vero_idle';
       return { id: outfit.id, label: outfit.nombre, textureKey };

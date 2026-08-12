@@ -317,12 +317,15 @@ class RoomScene extends Phaser.Scene {
 
   // Prenda (Etapa 3, personalización — game.registry 'outfit', ver
   // js/data/outfits.js). Ya no hay elección de peinado (sacada a pedido
-  // del usuario) — cada prenda usa siempre su versión "suelto", incluido
-  // 'default' (vero-default-peinados.png). Cae a vero_idle si esa
-  // combinación puntual no existiera (red de seguridad, no debería pasar
-  // con las 4 prendas ya cubiertas).
+  // del usuario) — cada prenda usa siempre su versión "suelto". 'default'
+  // vuelve a usar vero_idle directo (el look clásico de siempre): la
+  // versión vero_default_suelto.png (vero-default-peinados.png, tanda de
+  // arte más nueva) no coincide en diseño con jardinera/pijama/vestido
+  // (extraídas de una hoja más vieja) — reportado por el usuario como una
+  // inconsistencia visible entre prendas.
   _veroIdleTexture() {
     const outfit = this.registry.get('outfit') || 'default';
+    if (outfit === 'default') return 'vero_idle';
     const key = `vero_${outfit}_suelto`;
     return this.textures.exists(key) ? key : 'vero_idle';
   }

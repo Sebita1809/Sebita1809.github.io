@@ -37,7 +37,11 @@ const Music = {
   ],
 
   // Los navegadores bloquean el audio hasta el primer gesto del usuario —
-  // game.js llama esto en el primer pointerdown/keydown global del juego.
+  // game.js llama esto en varios tipos de primer gesto (pointerdown,
+  // touchstart, keydown) por las dudas de que alguno no dispare en algún
+  // navegador/dispositivo (reportado por el usuario: no sonaba abriéndolo
+  // desde el link — puede ser esto, o el AudioContext arrancando
+  // 'suspended' pese al gesto, por eso el resume() explícito de abajo).
   start(initialVolume) {
     if (this._started) return;
     this._started = true;
@@ -48,6 +52,12 @@ const Music = {
     this._master = this._ctx.createGain();
     this._master.gain.value = initialVolume;
     this._master.connect(this._ctx.destination);
+
+    // Algunos navegadores (sobre todo mobile) crean el AudioContext ya
+    // 'suspended' incluso disparado desde un gesto real — sin este resume()
+    // explícito el contexto queda mudo para siempre, sin ningún error
+    // visible que lo delate.
+    if (this._ctx.state === 'suspended') this._ctx.resume();
 
     this._startDrone();
     this._nextLoopStart = this._ctx.currentTime + 0.2;

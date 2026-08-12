@@ -31,11 +31,16 @@ class BootScene extends Phaser.Scene {
     // Prendas (Etapa 3, personalización — ver js/data/outfits.js y
     // RoomScene._veroIdleTexture). Ya no hay elección de peinado (pedido
     // del usuario: sacar esa diferencia entre versiones) — cada prenda usa
-    // siempre su versión "suelto" (recortadas con extract-vero-outfits.js/
-    // extract-vero-default-peinados.js; las versiones colita/trenza/rodete
-    // quedan en disco sin usar). Mismo filtro NEAREST que vero_idle (pixel
-    // art, no van en la lista LINEAR de abajo).
-    ['default', 'pijama', 'jardinera', 'vestido'].forEach(outfit => {
+    // siempre su versión "suelto" (recortadas con extract-vero-outfits.js).
+    // Mismo filtro NEAREST que vero_idle (pixel art, no van en la lista
+    // LINEAR de abajo).
+    //
+    // 'default' NO se carga acá — vuelve a usar vero_idle directo (el
+    // clásico de siempre). vero_default_suelto.png (vero-default-
+    // peinados.png, tanda de arte más nueva) no coincidía en diseño con
+    // jardinera/pijama/vestido — reportado por el usuario, queda en disco
+    // sin usar.
+    ['pijama', 'jardinera', 'vestido'].forEach(outfit => {
       this.load.image(`vero_${outfit}_suelto`, `assets/sprites/vero_${outfit}_suelto.png`);
     });
 
