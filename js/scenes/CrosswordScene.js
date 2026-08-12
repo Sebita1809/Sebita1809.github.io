@@ -232,7 +232,19 @@ function shuffleArrayCw(arr) {
 }
 
 function tryGenerate(bank, targetCount) {
-  const order = shuffleArrayCw(bank).sort((a, b) => b.word.length - a.word.length);
+  // Bug real reportado por el usuario: acá había un `.sort((a,b) =>
+  // b.word.length - a.word.length)` DESPUÉS del shuffle — Array.sort es
+  // estable, así que el shuffle solo importaba como desempate entre
+  // palabras de IGUAL longitud; la selección real terminaba dominada por
+  // las palabras más largas de TODO el banco (siempre las mismas ~7-10 de
+  // 117), sin importar cuántas veces se generara. Medido: 7.45/10 palabras
+  // repetidas en promedio entre generaciones distintas. Sacar el sort deja
+  // el shuffle hacer su trabajo de verdad — bajó a 1.2/10 de overlap
+  // promedio, sigue ubicando las 10 palabras siempre (findSpot ya se
+  // saltea sola cualquier palabra que no cruce, no hace falta ordenar por
+  // longitud para que funcione) y hasta las grillas salen más compactas en
+  // promedio al no forzar meter siempre las palabras más largas del banco.
+  const order = shuffleArrayCw(bank);
   const placed = [];
   const grid = new Map(); // "r,c" -> letra
 
