@@ -20,19 +20,16 @@
 // etapas: 'growing'/'ready', nombres heredados de la v1 sin arte nuevo
 // intermedio) con etapas confiables.
 const PLANTS = [
-  // ⚠️ DEBUG TEMPORAL: growthMs a 10s de nuevo (pedido del usuario para
-  // revisar el offset/tamaño nuevo del ícono en las 3 etapas) — valores
-  // reales comentados al lado. RESTAURAR antes de entregar el juego.
-  { id: 'lechuga',   growthMs: 10 * 1000, /* 30 * 60 * 1000 */      seedCost: 3,  harvestCoins: 2, stages: ['plantula', 'crecida'] },
-  { id: 'zanahoria', growthMs: 10 * 1000, /* 60 * 60 * 1000 */      seedCost: 4,  harvestCoins: 2, stages: ['plantula', 'crecida'] },
-  { id: 'tomate',    growthMs: 10 * 1000, /* 2 * 60 * 60 * 1000 */  seedCost: 5,  harvestCoins: 2, stages: ['plantula', 'crecida'] },
-  { id: 'remolacha', growthMs: 10 * 1000, /* 2 * 60 * 60 * 1000 */  seedCost: 5,  harvestCoins: 2, stages: ['plantula', 'crecida'] },
-  { id: 'frutilla',  growthMs: 10 * 1000, /* 3 * 60 * 60 * 1000 */  seedCost: 6,  harvestCoins: 3, stages: ['plantula', 'crecida', 'confrutos'] },
-  { id: 'choclo',    growthMs: 10 * 1000, /* 4 * 60 * 60 * 1000 */  seedCost: 7,  harvestCoins: 3, stages: ['growing', 'ready'] },
-  { id: 'mandarina', growthMs: 10 * 1000, /* 6 * 60 * 60 * 1000 */  seedCost: 8,  harvestCoins: 3, stages: ['plantula', 'crecida', 'confrutos'] },
-  { id: 'naranja',   growthMs: 10 * 1000, /* 6 * 60 * 60 * 1000 */  seedCost: 8,  harvestCoins: 3, stages: ['plantula', 'crecida', 'confrutos'] },
-  { id: 'manzana',   growthMs: 10 * 1000, /* 8 * 60 * 60 * 1000 */  seedCost: 10, harvestCoins: 4, stages: ['plantula', 'crecida', 'confrutos'] },
-  { id: 'sandia',    growthMs: 10 * 1000, /* 12 * 60 * 60 * 1000 */ seedCost: 14, harvestCoins: 5, stages: ['plantula', 'crecida', 'confrutos'] },
+  { id: 'lechuga',   growthMs: 30 * 60 * 1000,       seedCost: 3,  harvestCoins: 2, stages: ['plantula', 'crecida'] },
+  { id: 'zanahoria', growthMs: 60 * 60 * 1000,       seedCost: 4,  harvestCoins: 2, stages: ['plantula', 'crecida'] },
+  { id: 'tomate',    growthMs: 2 * 60 * 60 * 1000,   seedCost: 5,  harvestCoins: 2, stages: ['plantula', 'crecida'] },
+  { id: 'remolacha', growthMs: 2 * 60 * 60 * 1000,   seedCost: 5,  harvestCoins: 2, stages: ['plantula', 'crecida'] },
+  { id: 'frutilla',  growthMs: 3 * 60 * 60 * 1000,   seedCost: 6,  harvestCoins: 3, stages: ['plantula', 'crecida', 'confrutos'] },
+  { id: 'choclo',    growthMs: 4 * 60 * 60 * 1000,   seedCost: 7,  harvestCoins: 3, stages: ['growing', 'ready'] },
+  { id: 'mandarina', growthMs: 6 * 60 * 60 * 1000,   seedCost: 8,  harvestCoins: 3, stages: ['plantula', 'crecida', 'confrutos'] },
+  { id: 'naranja',   growthMs: 6 * 60 * 60 * 1000,   seedCost: 8,  harvestCoins: 3, stages: ['plantula', 'crecida', 'confrutos'] },
+  { id: 'manzana',   growthMs: 8 * 60 * 60 * 1000,   seedCost: 10, harvestCoins: 4, stages: ['plantula', 'crecida', 'confrutos'] },
+  { id: 'sandia',    growthMs: 12 * 60 * 60 * 1000,  seedCost: 14, harvestCoins: 5, stages: ['plantula', 'crecida', 'confrutos'] },
 ];
 
 // El crecimiento NO se acumula con un delta por frame (a diferencia de
