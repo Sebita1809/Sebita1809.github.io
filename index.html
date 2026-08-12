@@ -17,12 +17,22 @@
   <meta name="apple-mobile-web-app-title" content="Vero" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
       background: #1a1a2e;
       display: flex;
       justify-content: center;
       align-items: center;
+      /* 100vh (fallback) puede incluir de más o de menos según si el
+         navegador cuenta la barra de dirección/compartir como parte del
+         viewport — 100dvh (altura DINÁMICA real) es más confiable en
+         mobile, sobre todo dentro de un WebView/TWA con su propia barra
+         (reportado por el usuario: se veían franjas a los costados del
+         juego en el .apk — Phaser.Scale.FIT mantiene el aspect ratio
+         390x844 fijo, así que si el alto disponible calculado quedaba de
+         menos, terminaba angostando todo el juego para no desbordar). */
       height: 100vh;
+      height: 100dvh;
       overflow: hidden;
     }
     canvas {
