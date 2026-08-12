@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Juego Vero 💜</title>
+
+  <!-- PWA: instalable desde "Agregar a pantalla de inicio" (Android/Chrome
+       principalmente, pedido del usuario — ver manifest.json/sw.js). -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#1a1a2e" />
+  <link rel="icon" href="assets/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Vero" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1a1a2e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+  </style>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.min.js"></script>
+  <script src="js/systems/StatsSystem.js"></script>
+  <script src="js/data/products.js"></script>
+  <script src="js/data/recetas.js"></script>
+  <script src="js/data/plants.js"></script>
+  <script src="js/data/outfits.js"></script>
+  <script src="js/systems/Inventory.js"></script>
+  <script src="js/systems/SaveManager.js"></script>
+  <script src="js/systems/MusicSystem.js"></script>
+  <script src="js/systems/TimingBar.js"></script>
+  <script src="js/systems/SwipeGesture.js"></script>
+  <script src="js/scenes/RoomScene.js"></script>
+  <script src="js/scenes/BootScene.js"></script>
+  <script src="js/scenes/CabinScene.js"></script>
+  <script src="js/scenes/MapScene.js"></script>
+  <script src="js/scenes/SettingsScene.js"></script>
+  <script src="js/scenes/HelpScene.js"></script>
+  <script src="js/scenes/TutorialScene.js"></script>
+  <script src="js/scenes/KitchenScene.js"></script>
+  <script src="js/scenes/BedroomScene.js"></script>
+  <script src="js/scenes/BathroomScene.js"></script>
+  <script src="js/scenes/ActivityScene.js"></script>
+  <script src="js/scenes/SudokuScene.js"></script>
+  <script src="js/scenes/CrosswordScene.js"></script>
+  <script src="js/scenes/GardenScene.js"></script>
+  <script src="js/game.js"></script>
+  <script>
+    // Registro del service worker (sw.js) — habilita "Agregar a pantalla
+    // de inicio" y las actualizaciones automáticas (ver comentario ahí).
+    // Requiere HTTPS (o localhost) — en un `file://` local no se registra,
+    // el juego sigue funcionando igual, solo sin la parte de PWA.
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch((err) => {
+          console.warn('[PWA] No se pudo registrar el service worker:', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Extractor de sprites — personaje-nuevo</title>
+  <style>
+    body { font-family: monospace; background: #1a1a2e; color: #eee; padding: 20px; }
+    h2 { color: #a78bfa; }
+    h3 { color: #fbbf24; margin: 28px 0 8px; border-bottom: 1px solid #333; padding-bottom: 4px; }
+    .grid { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 12px; }
+    .sprite-card {
+      background: #16213e; border: 1px solid #a78bfa;
+      border-radius: 8px; padding: 12px; text-align: center;
+    }
+    canvas {
+      display: block; margin: 0 auto 8px; image-rendering: pixelated;
+      background: repeating-conic-gradient(#333 0% 25%, #444 0% 50%) 0 0 / 10px 10px;
+    }
+    a {
+      display: inline-block; margin-top: 6px; padding: 4px 12px;
+      background: #a78bfa; color: #fff; border-radius: 4px;
+      text-decoration: none; font-size: 12px;
+    }
+    a:hover { background: #7c3aed; }
+    .info { color: #888; font-size: 12px; margin-top: 4px; }
+    #status { margin-top: 20px; color: #fbbf24; }
+  </style>
+</head>
+<body>
+  <h2>🎨 Extractor de sprites — personaje-nuevo.png</h2>
+  <p>Previsualizá cada recorte y descargalo si necesitás. Los sprites ya fueron extraídos
+     automáticamente con <code>node extract-sprites.js</code>.</p>
+  <div id="status">Cargando imagen...</div>
+
+  <script>
+    // ── Coordenadas extraídas de personaje-nuevo.png (1536×1024 px) ───────────
+    function rect(x1, y1, x2, y2) {
+      return { x: x1, y: y1, w: x2 - x1, h: y2 - y1 };
+    }
+
+    const SECTIONS = [
+      {
+        title: 'Sprite Principal',
+        sprites: [
+          { name: 'vero_idle', label: 'Idle (principal)', ...rect(82, 158, 217, 473) },
+        ]
+      },
+      {
+        title: 'Idle — parpadeo (4 frames)',
+        sprites: [
+          { name: 'vero_idle1', label: 'Idle 1', ...rect(312,  84, 379, 214) },
+          { name: 'vero_idle2', label: 'Idle 2', ...rect(395,  84, 461, 214) },
+          { name: 'vero_idle3', label: 'Idle 3', ...rect(479,  84, 546, 214) },
+          { name: 'vero_idle4', label: 'Idle 4', ...rect(560,  84, 627, 214) },
+        ]
+      },
+      {
+        title: 'Caminando (5 frames)',
+        sprites: [
+          { name: 'vero_walk1', label: 'Walk 1', ...rect( 654,  84,  723, 213) },
+          { name: 'vero_walk2', label: 'Walk 2', ...rect( 741,  84,  809, 213) },
+          { name: 'vero_walk3', label: 'Walk 3', ...rect( 827,  84,  896, 213) },
+          { name: 'vero_walk4', label: 'Walk 4', ...rect( 915,  84,  984, 213) },
+          { name: 'vero_walk5', label: 'Walk 5', ...rect(1004,  84, 1072, 213) },
+        ]
+      },
+      {
+        title: 'Otras animaciones',
+        sprites: [
+          { name: 'vero_saludando',     label: 'Saludando 👋',      ...rect(315, 271, 409, 365) },
+          { name: 'vero_victoria',      label: 'Victoria ✨',        ...rect(474, 270, 567, 365) },
+          { name: 'vero_pensando',      label: 'Pensando 💭',        ...rect(633, 271, 706, 363) },
+          { name: 'vero_usando_objeto', label: 'Usando objeto 🔴',   ...rect(779, 270, 853, 365) },
+          { name: 'vero_dano',          label: 'Daño ⚡',            ...rect(915, 273,1006, 365) },
+        ]
+      },
+      {
+        title: 'Variaciones de expresión',
+        sprites: [
+          { name: 'vero_feliz',       label: 'Feliz ✨',                  ...rect( 299, 500,  406, 660) },
+          { name: 'vero_cansada',     label: 'Cansada 💤',                ...rect( 454, 500,  554, 660) },
+          { name: 'vero_aburrida',    label: 'Aburrida 💬',               ...rect( 582, 499,  660, 660) },
+          { name: 'vero_debil',       label: 'Débil / Con hambre ❓',      ...rect( 687, 500,  829, 660) },
+          { name: 'vero_colorada',    label: 'Colorada / Esfuerzo 💦',    ...rect( 831, 499,  949, 660) },
+          { name: 'vero_sorprendida', label: 'Sorprendida ❗',             ...rect( 981, 499, 1082, 660) },
+        ]
+      },
+    ];
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = 'assets/sprites/personaje-nuevo.png';
+
+    img.onload = () => {
+      document.getElementById('status').textContent =
+        `✅ Imagen cargada: ${img.naturalWidth}×${img.naturalHeight}px`;
+
+      SECTIONS.forEach(section => {
+        const h3 = document.createElement('h3');
+        h3.textContent = section.title;
+        document.body.appendChild(h3);
+
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+
+        section.sprites.forEach(sp => {
+          // Canvas completo (para descarga)
+          const full = document.createElement('canvas');
+          full.width  = sp.w;
+          full.height = sp.h;
+          full.getContext('2d').drawImage(img, sp.x, sp.y, sp.w, sp.h, 0, 0, sp.w, sp.h);
+
+          // Preview reducida
+          const scale = Math.min(1, 160 / Math.max(sp.w, sp.h));
+          const preview = document.createElement('canvas');
+          preview.width  = Math.round(sp.w * scale);
+          preview.height = Math.round(sp.h * scale);
+          preview.getContext('2d').drawImage(full, 0, 0, preview.width, preview.height);
+
+          const link = document.createElement('a');
+          link.textContent = `⬇ ${sp.name}.png`;
+          link.download = `${sp.name}.png`;
+          link.href = full.toDataURL('image/png');
+
+          const info = document.createElement('div');
+          info.className = 'info';
+          info.textContent = `${sp.w}×${sp.h}px`;
+
+          const card = document.createElement('div');
+          card.className = 'sprite-card';
+          card.append(preview, document.createElement('br'),
+                      document.createTextNode(sp.label), document.createElement('br'),
+                      info, link);
+          grid.appendChild(card);
+        });
+
+        document.body.appendChild(grid);
+      });
+    };
+
+    img.onerror = () => {
+      document.getElementById('status').textContent =
+        '❌ No se pudo cargar personaje-nuevo.png. Abrí con servidor local (npx serve . -l 3000)';
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Dependencias (jimp, para los scripts de extracción de sprites) — se
+# reinstalan con `npm install`, no hace falta versionarlas.
+node_modules/
+
+# Backups de "antes de limpiar el logo/marca de agua" — confirmados sin
+# ninguna referencia en js/ (no se cargan en el juego), se guardan solo
+# como historial local por si hace falta re-limpiar algo.
+assets/sprites/cocina_nueva_original_backup.png
+assets/sprites/cocina_original_backup.png
+assets/sprites/microondas_original_backup.png
+assets/sprites/preview_composite.png
